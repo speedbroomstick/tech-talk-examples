@@ -2,12 +2,12 @@ import arrow from '../../../../assets/svg/arrow.svg';
 import backArrow from '../../../../assets/svg/BackArrow.svg';
 import { ActiveLink, Link, PaginationDiv } from '../../../../components/Pagination/styled';
 import { IPaginationProps } from '../../../../constants/interfaces/IPagination';
-import { useState, useCallback } from 'react';
+import React,{ useCallback } from 'react';
 
 var options = { language: "ru", icon: ActiveLink };
 
-export function Pagination({ total, offset, setOffset, paintingId, image_id, title, artist_title }: IPaginationProps) {
-    const [currentPage, setCurrentPage] = useState(1);
+export function pagination({ total, offset, setOffset, paintingId, image_id, title, artist_title }: IPaginationProps) {
+    const [currentPage, setCurrentPage] = React.useState(1);
 
     const handleClick = useCallback((countOffset: number, countPage: number, count?: number, like?: number, options?: any) => {
         setOffset(countOffset);
@@ -31,7 +31,7 @@ export function Pagination({ total, offset, setOffset, paintingId, image_id, tit
         <PaginationDiv data-testid="pagDiv">
             <div style={{ padding: "40px", margin: "10px" }}>Back</div>
             {currentPage > 1 ? (
-                <>
+                <React.Fragment>
                     <Link onClick={() => handleClick(offset - 3, currentPage - 1)}>
                         <img src={backArrow} alt="" />
                     </Link>
@@ -43,13 +43,13 @@ export function Pagination({ total, offset, setOffset, paintingId, image_id, tit
                     <Link onClick={() => handleClick(offset - 3, currentPage - 1)}>
                         {currentPage - 1}
                     </Link>
-                </>
+                </React.Fragment>
             ) : null}
             <ActiveLink onClick={() => handleClick(offset, currentPage)}>
                 {currentPage}
             </ActiveLink>
             {currentPage < Math.ceil(total / 3) ? (
-                <>
+                <React.Fragment>
                     <Link onClick={() => handleClick(offset + 3, currentPage + 1)}>
                         {currentPage + 1}
                     </Link>
@@ -61,7 +61,7 @@ export function Pagination({ total, offset, setOffset, paintingId, image_id, tit
                     <Link onClick={() => handleClick(offset + 3, currentPage + 1)}>
                         <img src={arrow} alt="" />
                     </Link>
-                </>
+                </React.Fragment>
             ) : null}
             <Footer paintingId={paintingId} image_id={image_id} title={title} artist_title={artist_title} />
         </PaginationDiv>
